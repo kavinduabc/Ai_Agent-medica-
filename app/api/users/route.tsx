@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
         )
       );
 
-    if (users.length === 0) { // ✅ fixed typo
+    if (users.length === 0) {
       const result = await dataBase
         .insert(usersTable)
         .values({
@@ -30,9 +30,9 @@ export async function POST(req: NextRequest) {
           email: user.primaryEmailAddress.emailAddress,
           credits: 10,
         })
-        .returning({ usersTable });
+        .returning();
 
-      return NextResponse.json(result[0]?.usersTable);
+      return NextResponse.json(result[0]);
     }
 
     return NextResponse.json(users[0]);
